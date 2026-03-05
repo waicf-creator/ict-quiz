@@ -665,6 +665,7 @@
     let score = 0;
     let answered = false;
     let currentTopic = '';
+    let currentCorrectLetter = '';
 
     const topicNames = {
         'week12': 'Week 1-2: Digital Technology',
@@ -686,6 +687,11 @@
     function startQuiz(topic) {
         currentTopic = topic;
         const pool = questionsByTopic[topic];
+        if (!pool || pool.length === 0) {
+            alert("題庫建置中！請選擇其他課題。");
+            return;
+        }
+
         currentQuestions = shuffle([...pool]).slice(0, 10);
         while (currentQuestions.length < 10) {
             currentQuestions = currentQuestions.concat(shuffle([...pool]).slice(0, 10 - currentQuestions.length));
@@ -699,9 +705,12 @@
         showQuestion();
     }
 
+    
     function showQuestion() {
         answered = false;
         const q = currentQuestions[currentIndex];
+        
+        // 更新題號與進度條 (已優化為可以達到 100%)
         document.getElementById('qNum').textContent = currentIndex + 1;
         document.getElementById('progressBar').style.width = ((currentIndex + 1) / 10 * 100) + '%';
         document.getElementById('question').textContent = q.question;
@@ -709,16 +718,37 @@
         const optionsEl = document.getElementById('options');
         optionsEl.innerHTML = '';
         
-        const letters = Object.keys(q.options);
-        letters.forEach(letter => {
+        // --- 開始選項洗牌邏輯 ---
+        
+        // 1. 取得這題正確答案的「文字內容」
+        const originalCorrectText = q.options[q.answer]; 
+        
+        // 2. 將四個選項文字放入陣列中
+        let optionsTexts = [q.options.A, q.options.B, q.options.C, q.options.D];
+        
+        // 3. 使用原有的 shuffle 函數打亂選項文字順序
+        optionsTexts = shuffle(optionsTexts);
+        
+        // 4. 找出打亂後，正確答案變成了哪一個新字母 (索引 0=A, 1=B, 2=C, 3=D)
+        const letters = ['A', 'B', 'C', 'D'];
+        const newCorrectIndex = optionsTexts.indexOf(originalCorrectText);
+        
+        // 5. 更新全域變數，紀錄這題目前的正確字母
+        currentCorrectLetter = letters[newCorrectIndex]; 
+        
+        // 6. 將打亂後的文字渲染到畫面上
+        letters.forEach((letter, index) => {
             const opt = document.createElement('div');
             opt.className = 'option';
             opt.dataset.letter = letter;
-            opt.innerHTML = '<div class="option-letter">' + letter + '</div><div class="option-text">' + q.options[letter] + '</div>';
+            opt.innerHTML = '<div class="option-letter">' + letter + '</div><div class="option-text">' + optionsTexts[index] + '</div>';
             opt.onclick = () => selectAnswer(letter, opt);
             optionsEl.appendChild(opt);
         });
         
+        // --- 結束選項洗牌邏輯 ---
+        
+        // 重置 UI 狀態
         document.getElementById('feedback').className = 'feedback';
         document.getElementById('feedback').textContent = '';
         document.getElementById('nextBtn').className = 'btn';
@@ -731,18 +761,25 @@
         answered = true;
         
         const q = currentQuestions[currentIndex];
-        const correct = q.answer;
+        
+        // 注意：這裡改用剛剛洗牌後記錄下來的 currentCorrectLetter 來比對
+        const correct = currentCorrectLetter; 
         
         if (letter === correct) {
+            // 答對的處理
             element.classList.add('correct');
             document.getElementById('feedback').className = 'feedback show correct';
             document.getElementById('feedback').textContent = '✓ Correct!';
             score++;
         } else {
+            // 答錯的處理
             element.classList.add('wrong');
+            // 找出正確的字母選項並標示為綠色 (加上 ?. 防呆)
             document.querySelector('[data-letter="' + correct + '"]')?.classList.add('correct');
             document.getElementById('feedback').className = 'feedback show wrong';
-            document.getElementById('feedback').textContent = '✗ Wrong! Answer: ' + correct;
+            
+            // 這裡優化了提示訊息：直接顯示正確的「文字內容」，對玩家更友善
+            document.getElementById('feedback').textContent = '✗ Wrong! Answer: ' + q.options[q.answer];
         }
         
         document.getElementById('score').textContent = score;
