@@ -41,6 +41,7 @@
     </style>
 </head>
 <body>
+    <!-- HOME -->
     <div id="home" class="container">
         <div class="lobster">🦞</div>
         <h1>ICT Quiz</h1>
@@ -54,8 +55,10 @@
             <div class="topic-btn" onclick="startQuiz('week6')"><h3>Week 6</h3><small>Security and Safety</small></div>
             <div class="topic-btn" onclick="startQuiz('all')"><h3>All Topics</h3><small>Random Mix</small></div>
         </div>
+        <p style="text-align:center; color:#999; font-size:0.9em;">40+ Questions per Topic | 10 Questions per Quiz</p>
     </div>
 
+    <!-- QUIZ -->
     <div id="quiz" class="container" style="display:none;">
         <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
         <div class="question-num">Question <span id="qNum">1</span> of 10</div>
@@ -66,6 +69,7 @@
         <button class="btn" id="nextBtn" onclick="nextQuestion()">Next →</button>
     </div>
 
+    <!-- RESULT -->
     <div id="result" class="container" style="display:none;">
         <div class="result-emoji">🦞</div>
         <h1>Quiz Complete!</h1>
@@ -76,213 +80,584 @@
     </div>
 
     <script>
+    // 40+ Questions per topic from actual course materials
     const questionsByTopic = {
         'week12': [
-            {"question": "According to the course material, what are the lesson objectives for Week 1-2?", "options": {"A": "Learning programming languages", "B": "Evolution of society's reliance on technology", "C": "Building computer networks", "D": "Designing websites"}, "answer": "B"},
-            {"question": "What was used in first generation computers?", "options": {"A": "Transistors", "B": "Vacuum tubes", "C": "Integrated circuits", "D": "Microprocessors"}, "answer": "B"},
-            {"question": "When was the microprocessor introduced?", "options": {"A": "1960s", "B": "1971", "C": "1970s", "D": "1980s"}, "answer": "B"},
-            {"question": "What does IoT stand for?", "options": {"A": "Internet of Technology", "B": "Internet of Things", "C": "Integrated Online Technology", "D": "International Operations Team"}, "answer": "B"},
-            {"question": "According to the material, what is embedded in IoT devices?", "options": {"A": "Large processors", "B": "Small processors", "C": "Special keyboards", "D": "Extra memory"}, "answer": "B"},
-            {"question": "What is Artificial Intelligence (AI)?", "options": {"A": "A type of computer game", "B": "The use of logic and prior experience to simulate human intelligence", "C": "A programming language", "D": "A network protocol"}, "answer": "B"},
-            {"question": "Which is NOT mentioned as an application of AI?", "options": {"A": "Speech recognition", "B": "Virtual reality", "C": "Blockchain", "D": "Logical reasoning"}, "answer": "C"},
-            {"question": "What is Virtual Reality (VR)?", "options": {"A": "Watching videos online", "B": "The use of computers to simulate a real or imagined environment", "C": "A type of spreadsheet", "D": "Video conferencing"}, "answer": "B"},
-            {"question": "What is Augmented Reality (AR)?", "options": {"A": "A type of VR that uses an image and adds digital information", "B": "A 3D printer", "C": "A gaming computer", "D": "A network cable"}, "answer": "A"},
-            {"question": "What is natural language processing?", "options": {"A": "Writing code in natural languages", "B": "Computers interpret and digitize spoken words and commands", "C": "Translating documents", "D": "Reading books"}, "answer": "B"},
-            {"question": "In what situations can robotics be useful according to the material?", "options": {"A": "Only in factories", "B": "When impractical, dangerous, or inconvenient to use a human", "C": "Only for entertainment", "D": "For cooking food"}, "answer": "B"},
-            {"question": "What is enterprise computing?", "options": {"A": "Personal computers at home", "B": "Each department of a large company uses technology specific to its function", "C": "Gaming computers", "D": "Internet cafes"}, "answer": "B"},
-            {"question": "What does ADA stand for?", "options": {"A": "American Digital Association", "B": "Americans with Disabilities Act", "C": "Advanced Computing Act", "D": "Application Development Alliance"}, "answer": "B"},
-            {"question": "What is alt text?", "options": {"A": "Alternative keyboard layout", "B": "Alternative text for images to assist users with disabilities", "C": "A programming language", "D": "A file extension"}, "answer": "B"},
-            {"question": "What is green computing?", "options": {"A": "Green colored computers", "B": "Applying environmental concepts to daily computing life", "C": "Using green energy drinks while computing", "D": "Recycling paper"}, "answer": "B"},
-            {"question": "What technology assists users with disabilities by reading screen content aloud?", "options": {"A": "Printers", "B": "Screen readers", "C": "Keyboards", "D": "Monitors"}, "answer": "B"},
-            {"question": "Which generation of computers used transistors?", "options": {"A": "First generation", "B": "Second generation", "C": "Third generation", "D": "Fourth generation"}, "answer": "B"},
-            {"question": "When did personal computers gain popularity?", "options": {"A": "1950s", "B": "1960s", "C": "1970s and 1980s", "D": "1990s"}, "answer": "C"},
-            {"question": "Embedded computers have what characteristic?", "options": {"A": "Have many general purposes", "B": "Have a specific purpose", "C": "Are very expensive", "D": "Need constant internet"}, "answer": "B"},
-            {"question": "What can cloud storage services like Google Drive provide?", "options": {"A": "Free hardware", "B": "Storing electronic files on the Internet", "C": "Free software", "D": "Internet access"}, "answer": "B"},
-            {"question": "What is m-commerce?", "options": {"A": "Mail commerce", "B": "Mobile commerce for online purchases using mobile devices", "C": "Machine learning", "D": "Computer manufacturing"}, "answer": "B"},
-            {"question": "What is cross-platform development?", "options": {"A": "Building bridges", "B": "Tools that allow apps to run on multiple operating systems", "C": "Gaming platforms", "D": "Learning multiple languages"}, "answer": "B"},
-            {"question": "What do IoT devices use to communicate?", "options": {"A": "Only cables", "B": "The Internet or wireless networks", "C": "Satellite phones", "D": "Radio waves only"}, "answer": "B"},
-            {"question": "What is a key benefit of virtual assistants?", "options": {"A": "They replace human workers completely", "B": "They can understand and respond to voice commands", "C": "They cost a lot of money", "D": "They require complex programming"}, "answer": "B"},
-            {"question": "Which of the following is a productivity app?", "options": {"A": "A game", "B": "Microsoft Word", "C": "A social media app", "D": "A camera app"}, "answer": "B"},
-            {"question": "What is productivity software used for?", "options": {"A": "Playing games", "B": "Creating documents, spreadsheets, and presentations", "C": "Browsing the internet", "D": "Watching videos"}, "answer": "B"},
-            {"question": "What is the purpose of captioning?", "options": {"A": "Adding colors to videos", "B": "Assisting hearing-impaired users", "C": "Encrypting files", "D": "Compressing data"}, "answer": "B"},
-            {"question": "What type of computers does Chrome OS primarily run?", "options": {"A": "Desktop computers", "B": "Web apps in the Chrome browser", "C": "Servers", "D": "Gaming consoles"}, "answer": "B"},
-            {"question": "What is a tablet classified as?", "options": {"A": "Desktop computer", "B": "Mobile device", "C": "Server", "D": "Mainframe"}, "answer": "B"},
-            {"question": "What is one advantage of desktop computers?", "options": {"A": "More difficult to upgrade", "B": "Hardware components can be easily upgraded", "C": "Less powerful", "D": "Not compatible"}, "answer": "B"},
-            {"question": "What is a disadvantage of all-in-one computers?", "options": {"A": "Take up less space", "B": "Typically more difficult to service or upgrade", "C": "Easier to transport", "D": "Cheaper than desktops"}, "answer": "B"},
-            {"question": "What is one consideration when purchasing a computer?", "options": {"A": "The color of the computer", "B": "Platform compatibility with other devices", "C": "Whether it has wheels", "D": "The brand name only"}, "answer": "B"},
-            {"question": "What does USB stand for?", "options": {"A": "Universal Serial Bus", "B": "United System Board", "C": "Universal System Buffer", "D": "Unique Serial Buffer"}, "answer": "A"},
-            {"question": "What is an external hard drive used for?", "options": {"A": "Inside the computer", "B": "Portable storage outside the computer", "C": "Network connection", "D": "Processing data"}, "answer": "B"},
-            {"question": "What is cloud storage?", "options": {"A": "Storage in the clouds", "B": "Storing files on the Internet instead of local computer", "C": "A weather phenomenon", "D": "A type of RAM"}, "answer": "B"},
-            {"question": "What is the function of the CPU?", "options": {"A": "Store data permanently", "B": "Convert input into meaningful output", "C": "Display images", "D": "Print documents"}, "answer": "B"},
-            {"question": "What travels in and out of the CPU through a bus?", "options": {"A": "Air", "B": "Data", "C": "Sound", "D": "Light"}, "answer": "B"},
-            {"question": "What is RAM?", "options": {"A": "Read-Only Memory", "B": "Random Access Memory", "C": "Remote Access Module", "D": "Random Application Module"}, "answer": "B"},
-            {"question": "What does BIOS stand for?", "options": {"A": "Binary Input Output System", "B": "Basic Input Output System", "C": "Built-in Input Operation Software", "D": "Basic Internet Operating System"}, "answer": "B"},
-            {"question": "What is POST?", "options": {"A": "Power On System Test", "B": "Power-on self test", "C": "Program Output System", "D": "Personal Online Service"}, "answer": "B"},
-            {"question": "What is firmware?", "options": {"A": "Office software", "B": "Software embedded in hardware", "C": "A computer game", "D": "A web browser"}, "answer": "B"}
+            {"question": "Which technology was used in first-generation computers?", "options": {"A": "Transistors", "B": "Microprocessors", "C": "Vacuum tubes", "D": "Integrated circuits"}, "answer": "C"},
+{"question": "What technology replaced vacuum tubes in the next generation of computers?", "options": {"A": "Integrated circuits", "B": "Microprocessors", "C": "Transistors", "D": "Optical drives"}, "answer": "C"},
+{"question": "In what decade were integrated circuits introduced to computers?", "options": {"A": "1940s", "B": "1950s", "C": "1960s", "D": "1970s"}, "answer": "C"},
+{"question": "What major computer evolution milestone occurred in 1971?", "options": {"A": "Invention of vacuum tubes", "B": "Introduction of the microprocessor", "C": "First personal computer release", "D": "Development of transistors"}, "answer": "B"},
+{"question": "When did the personal computer (PC) gain widespread popularity?", "options": {"A": "1950s and 1960s", "B": "1960s and 1970s", "C": "1970s and 1980s", "D": "1980s and 1990s"}, "answer": "C"},
+{"question": "What does IoT stand for?", "options": {"A": "Internet of Technology", "B": "Internet of Things", "C": "Integration of Tools", "D": "Internet of Transmission"}, "answer": "B"},
+{"question": "Which of the following best describes embedded computers?", "options": {"A": "They are designed for general-purpose computing", "B": "They have unlimited hardware capabilities", "C": "They are small, have limited hardware, and a specific purpose", "D": "They cannot communicate over wireless networks"}, "answer": "C"},
+{"question": "Which smart vehicle system adjusts the vehicle's throttle if vehicles in front are too close?", "options": {"A": "Advanced airbag systems", "B": "Electronic stability control", "C": "Tire pressure monitoring", "D": "Adaptive cruise control systems"}, "answer": "D"},
+{"question": "What is the function of electronic stability control in vehicles?", "options": {"A": "It detects tire pressure loss", "B": "It automatically applies brakes when you lose control of steering or traction", "C": "It communicates throttle pressure to the engine", "D": "It inflates airbags based on crash severity"}, "answer": "B"},
+{"question": "Which system uses electronic communication to tell the engine how much and how fast to accelerate, replacing physical linkages?", "options": {"A": "Drive-by wire systems", "B": "Telematics", "C": "Electronic stability control", "D": "Advanced airbag systems"}, "answer": "A"},
+{"question": "How is Artificial Intelligence (AI) defined in the provided material?", "options": {"A": "The physical construction of robotic limbs", "B": "The technological use of logic and prior experience to simulate human intelligence", "C": "The connection of everyday devices to the internet", "D": "The reduction of environmental waste from technology"}, "answer": "B"},
+{"question": "Which of the following is listed as an application of Artificial Intelligence?", "options": {"A": "Vacuum tubes", "B": "Speech recognition", "C": "Telecommuting", "D": "Tire pressure monitoring"}, "answer": "B"},
+{"question": "What is Virtual Reality (VR)?", "options": {"A": "An image of an actual place with added digital information", "B": "The use of computers to simulate a real or imagined environment as a three-dimensional (3-D) space", "C": "A network of embedded processors in everyday objects", "D": "A system that manages business data"}, "answer": "B"},
+{"question": "How does Augmented Reality (AR) differ from Virtual Reality (VR)?", "options": {"A": "AR uses an image of an actual place and adds digital information to it", "B": "AR completely replaces the real world with a simulated one", "C": "AR requires vacuum tubes to function", "D": "AR is only used for speech recognition"}, "answer": "A"},
+{"question": "What is the function of natural language processing?", "options": {"A": "To convert analog audio into digital music files", "B": "To allow computers to interpret and digitize spoken words and commands", "C": "To automatically apply vehicle brakes", "D": "To translate programming code into machine language"}, "answer": "B"},
+{"question": "Why is robotics considered useful for enhancing productivity?", "options": {"A": "It replaces the need for an internet connection", "B": "It is useful in situations where it is impractical, dangerous, or inconvenient to use a human", "C": "It generates creative responses like AI", "D": "It primarily manages business intelligence"}, "answer": "B"},
+{"question": "What is enterprise computing?", "options": {"A": "Using a single software for all personal tasks", "B": "Each department of a large company using technology specific to its function", "C": "The evolution of personal computers in the 1980s", "D": "A type of green computing"}, "answer": "B"},
+{"question": "Which law mentioned in the material assists users with disabilities?", "options": {"A": "Digital Millennium Copyright Act", "B": "Individuals with Disabilities Education Act (IDEA)", "C": "Consumer Privacy Act", "D": "Computer Fraud and Abuse Act"}, "answer": "B"},
+{"question": "Which technology is specifically mentioned to assist users with visual disabilities?", "options": {"A": "Drive-by wire systems", "B": "Virtual reality headsets", "C": "Screen readers", "D": "Machine-to-machine communications"}, "answer": "C"},
+{"question": "What is a primary goal of Green Computing?", "options": {"A": "Increasing processing speed of embedded computers", "B": "Reducing electricity and environmental waste generated from technology", "C": "Developing more advanced virtual reality environments", "D": "Creating predictive business intelligence models"}, "answer": "B"},
+{"question": "Which of the following is an example of green computing?", "options": {"A": "Using screen readers", "B": "Using paperless communications", "C": "Applying adaptive cruise control", "D": "Implementing a BYOD policy"}, "answer": "B"},
+{"question": "What does telecommuting refer to in the workplace?", "options": {"A": "Using autonomous vehicles for delivery", "B": "Working remotely", "C": "Recycling computer hardware", "D": "Using smart refrigerators to order groceries"}, "answer": "B"},
+{"question": "What does BYOD stand for in a corporate policy context?", "options": {"A": "Build Your Own Database", "B": "Bring Your Own Device", "C": "Buy Your Own Domain", "D": "Backup Your Own Data"}, "answer": "B"},
+{"question": "How can social networking be utilized in K-12 education according to the document?", "options": {"A": "For diagnosing patient illnesses", "B": "To teach concepts such as anti-bullying", "C": "To operate robotic arms for surgeries", "D": "To predict tire pressure issues"}, "answer": "B"},
+{"question": "What is the purpose of an 'Intelligent classroom'?", "options": {"A": "To replace teachers with AI", "B": "To use technology to facilitate learning and communication", "C": "To store student records securely", "D": "To provide simulated virtual reality field trips only"}, "answer": "B"},
+{"question": "How do drivers primarily use GPS technology in transportation?", "options": {"A": "To track packages remotely", "B": "To avoid traffic and hazardous conditions", "C": "To monitor patient vital signs", "D": "To read alternative text"}, "answer": "B"},
+{"question": "What does mobile health (mHealth) allow healthcare professionals to do?", "options": {"A": "Avoid traffic hazards", "B": "3-D print medical devices", "C": "Access health records remotely", "D": "Automate factory production lines"}, "answer": "C"},
+{"question": "What does CAM stand for in the context of manufacturing?", "options": {"A": "Computer-Aided Manufacturing", "B": "Centralized Automated Machines", "C": "Control and Monitoring", "D": "Computational Analysis Mechanism"}, "answer": "A"},
+{"question": "Why are robots often used in Computer-aided manufacturing (CAM)?", "options": {"A": "To manage social media marketing", "B": "To perform work that is too dangerous, detailed, or monotonous for people", "C": "To replace human executives in decision making", "D": "To teach K-12 educational curriculums"}, "answer": "B"},
+{"question": "What is machine-to-machine (M2M) communication used for in manufacturing?", "options": {"A": "Monitoring assembly lines and equipment", "B": "Communicating between medical monitoring devices", "C": "Streaming music in vehicles", "D": "Taking classes and earning degrees online"}, "answer": "A"},
+{"question": "What is the purpose of a Learning Management System (LMS) in higher education?", "options": {"A": "To provide web-based training and allow students to check course progress", "B": "To monitor patients' vital signs remotely", "C": "To automatically pilot transportation vehicles", "D": "To reduce electricity consumption on campus"}, "answer": "A"},
+{"question": "What is an Information System?", "options": {"A": "A network of embedded sensors in smart devices", "B": "A system used to generate the information needed to support the users in an organization", "C": "A robotic system used strictly for manufacturing", "D": "A program used to translate spoken words into text"}, "answer": "B"},
+{"question": "How is Business Intelligence (BI) defined?", "options": {"A": "A system that regulates vehicle acceleration", "B": "The use of screen readers for company executives", "C": "The processes, technologies, and tools used to gather, store, access, and analyze data about a company", "D": "An intelligent classroom technology for business schools"}, "answer": "C"},
+{"question": "What is the term for a comprehensive collection of data about a company and its customers?", "options": {"A": "Web mining", "B": "Data warehouse", "C": "Learning Management System", "D": "Telematics"}, "answer": "B"},
+{"question": "What is Data Mining?", "options": {"A": "Manually sorting through physical paper records", "B": "The use of intelligent software to find subtle patterns that may not be otherwise evident", "C": "Using VR to simulate physical digging operations", "D": "Backing up company hard drives to the cloud"}, "answer": "B"},
+{"question": "What is one beneficial outcome of data mining for a business?", "options": {"A": "Locating delivery vehicles in real-time", "B": "Identifying processes that need improvement", "C": "Finding the fastest internet service provider", "D": "Detecting hardware defects in microprocessors"}, "answer": "B"},
+{"question": "What is an Enterprise system?", "options": {"A": "A system that links multiple external enterprises only", "B": "A system used throughout an entire enterprise (business, organization, agency)", "C": "A system that limits data access to external users only", "D": "A system that functions solely for operational managers"}, "answer": "B"},
+{"question": "What type of information system links multiple enterprises, such as a business and its customers, suppliers, and partners?", "options": {"A": "Intra-enterprise systems", "B": "Inter-enterprise systems", "C": "Isolated enterprise systems", "D": "Closed-loop systems"}, "answer": "B"},
+{"question": "According to the course material, which program is an example of Green Computing initiatives?", "options": {"A": "ENERGY STAR program", "B": "SpaceX program", "C": "Data warehouse program", "D": "mHealth program"}, "answer": "A"}
         ],
         'week3': [
-            {"question": "What is the primary function of the CPU?", "options": {"A": "Store data", "B": "Convert input into meaningful output", "C": "Display graphics", "D": "Connect to the internet"}, "answer": "B"},
-            {"question": "What travels in and out of the CPU through a bus?", "options": {"A": "Air", "B": "Data", "C": "Sound", "D": "Light"}, "answer": "B"},
-            {"question": "What is RAM?", "options": {"A": "Read-Only Memory", "B": "Random Access Memory", "C": "Remote Access Module", "D": "Random Application Module"}, "answer": "B"},
-            {"question": "What does ROM stand for?", "options": {"A": "Random Output Memory", "B": "Read-Only Memory", "C": "Run-Only Memory", "D": "Rapid Operation Module"}, "answer": "B"},
-            {"question": "What is BIOS?", "options": {"A": "Binary Input Output System", "B": "Basic Input Output System", "C": "Built-in Internet Operating System", "D": "Basic Internet Output System"}, "answer": "B"},
-            {"question": "What does POST stand for?", "options": {"A": "Power On System Test", "B": "Power-on self test", "C": "Personal Online Service", "D": "Program Output Standard"}, "answer": "B"},
-            {"question": "What is firmware?", "options": {"A": "Office software", "B": "Software embedded in hardware", "C": "A computer game", "D": "A web browser"}, "answer": "B"},
-            {"question": "Which is an example of an input device?", "options": {"A": "Monitor", "B": "Printer", "C": "Keyboard", "D": "Speaker"}, "answer": "C"},
-            {"question": "Which is an example of an output device?", "options": {"A": "Keyboard", "B": "Mouse", "C": "Monitor", "D": "Scanner"}, "answer": "C"},
-            {"question": "What is virtual memory?", "options": {"A": "Physical memory on the CPU", "B": "Hard disk space used as extra memory", "C": "A type of ROM", "D": "Network storage"}, "answer": "B"},
-            {"question": "What is a swap file also known as?", "options": {"A": "Cache file", "B": "Paging file", "C": "System file", "D": "Boot file"}, "answer": "B"},
-            {"question": "What is binary system based on?", "options": {"A": "Numbers 0-9", "B": "0s and 1s", "C": "Letters A-Z", "D": "Colors"}, "answer": "B"},
-            {"question": "How many bits equal 1 byte?", "options": {"A": "2", "B": "4", "C": "8", "D": "16"}, "answer": "C"},
-            {"question": "What is ASCII?", "options": {"A": "A type of computer", "B": "Text coding scheme", "C": "An operating system", "D": "A network protocol"}, "answer": "B"},
-            {"question": "What is Unicode?", "options": {"A": "A type of printer", "B": "Text coding scheme for multiple languages", "C": "A CPU type", "D": "A storage device"}, "answer": "B"},
-            {"question": "What is an HDD?", "options": {"A": "High Definition Display", "B": "Magnetic hard disk drive", "C": "Hyper Data Drive", "D": "Host Data Device"}, "answer": "B"},
-            {"question": "What does SSD stand for?", "options": {"A": "Super Speed Drive", "B": "Solid State Drive", "C": "Serial System Device", "D": "Standard Software Disk"}, "answer": "B"},
-            {"question": "What is an advantage of SSD over HDD?", "options": {"A": "Cheaper", "B": "Faster", "C": "Larger capacity", "D": "More durable physically"}, "answer": "B"},
-            {"question": "What is an external hard drive?", "options": {"A": "Inside the computer case", "B": "Portable drive outside the computer", "C": "Network storage", "D": "Cloud storage"}, "answer": "B"},
-            {"question": "What is a USB flash drive?", "options": {"A": "A type of memory card", "B": "Small portable storage device", "C": "A network adapter", "D": "A cooling device"}, "answer": "B"},
-            {"question": "What are optical media?", "options": {"A": "Magnetic tapes", "B": "CDs and DVDs", "C": "Hard drives", "D": "USB drives"}, "answer": "B"},
-            {"question": "What is cloud storage?", "options": {"A": "Storage on your local computer", "B": "Storing files on the Internet", "C": "Storage in the clouds", "D": "A physical drive"}, "answer": "B"},
-            {"question": "What are examples of cloud storage?", "options": {"A": "Google Drive, OneDrive, Dropbox", "B": "Hard drives, USB", "C": "CDs, DVDs", "D": "Printers, scanners"}, "answer": "A"},
-            {"question": "What is a desktop computer?", "options": {"A": "Computer built into a monitor", "B": "Typically has separate system unit, monitor, keyboard, mouse", "C": "Portable tablet", "D": "Phone"}, "answer": "B"},
-            {"question": "What is an all-in-one computer?", "options": {"A": "Computer with separate monitor and tower", "B": "Monitor and system unit housed together", "C": "Very powerful gaming PC", "D": "Server computer"}, "answer": "B"},
-            {"question": "What is a disadvantage of all-in-one computers?", "options": {"A": "Take up less space", "B": "More difficult to service or upgrade", "C": "Easier to transport", "D": "Cheaper than desktops"}, "answer": "B"},
-            {"question": "What is a mobile device?", "options": {"A": "Desktop computer", "B": "Portable or handheld computing device", "C": "Server", "D": "Mainframe computer"}, "answer": "B"},
-            {"question": "Can tablets be upgraded?", "options": {"A": "Yes, easily", "B": "Typically not upgradeable", "C": "Only the screen", "D": "Only the battery"}, "answer": "B"},
-            {"question": "What should you consider when buying a computer?", "options": {"A": "Only the price", "B": "Platform, hardware specifications, form factor", "C": "Only the color", "D": "Only the brand name"}, "answer": "B"},
-            {"question": "What does form factor refer to?", "options": {"A": "The software installed", "B": "The physical size and design of the computer", "C": "The price", "D": "The operating system"}, "answer": "B"},
-            {"question": "What is the machine cycle?", "options": {"A": "A computer game", "B": "The process of fetching, decoding, executing, and storing", "C": "A type of CPU", "D": "Network cycle"}, "answer": "B"},
-            {"question": "What is cache memory?", "options": {"A": "Slow backup storage", "B": "Fast memory for frequently accessed data", "C": "Network memory", "D": "External storage"}, "answer": "B"},
-            {"question": "What is the GPU used for?", "options": {"A": "Manage memory", "B": "Process graphics", "C": "Store files", "D": "Connect to internet"}, "answer": "B"},
-            {"question": "What is a computer bus?", "options": {"A": "A vehicle", "B": "Data transfer pathway", "C": "A storage device", "D": "A type of software"}, "answer": "B"},
-            {"question": "What is the motherboard?", "options": {"A": "The main circuit board that connects components", "B": "A type of CPU", "C": "A storage device", "D": "A monitor"}, "answer": "A"},
-            {"question": "What does USB stand for?", "options": {"A": "Universal Serial Bus", "B": "United System Board", "C": "Unique Serial Buffer", "D": "Universal System Box"}, "answer": "A"},
-            {"question": "What is a port on a computer?", "options": {"A": "A software program", "B": "Connection point for devices", "C": "Storage location", "D": "Display screen"}, "answer": "B"},
-            {"question": "What is the power supply function?", "options": {"A": "Process data", "B": "Convert AC to DC power", "C": "Store files", "D": "Display graphics"}, "answer": "B"},
-            {"question": "What is a CPU fan used for?", "options": {"A": "Make noise", "B": "Cool down the processor", "C": "Speed up the computer", "D": "Store data"}, "answer": "B"},
-            {"question": "What is VRAM?", "options": {"A": "Voice Random Access Memory", "B": "Video RAM for graphics processing", "C": "Virtual Read-Only Memory", "D": "Very Remote Access Module"}, "answer": "B"}
+            {"question": "What does CPU stand for?", "options": {"A": "Computer Personal Unit", "B": "Central Processing Unit", "C": "Central Print Unit", "D": "Computer Processing User"}, "answer": "B"},
+{"question": "What is the primary responsibility of a Central Processing Unit (CPU)?", "options": {"A": "Storing files permanently", "B": "Converting input (data) into meaningful output (information)", "C": "Displaying images on the screen", "D": "Connecting the computer to the internet"}, "answer": "B"},{"question": "How does data travel in and out of the CPU?", "options": {"A": "Through a bus", "B": "Through a vacuum tube", "C": "Through a projector", "D": "Through a power cord"}, "answer": "A"},
+{"question": "Which of the following devices typically contains a CPU?", "options": {"A": "Only desktop computers", "B": "Only laptops and servers", "C": "Laptops, smartphones, and specialized electronic control systems", "D": "Only external hard drives"}, "answer": "C"},
+{"question": "What are the typical four steps of a machine cycle?", "options": {"A": "Input, Process, Output, Storage", "B": "Fetch, Decode, Execute, Store", "C": "Read, Write, Delete, Format", "D": "Start, Run, Stop, Sleep"}, "answer": "B"},
+
+{"question": "In the machine cycle, what is the function of the 'Fetch' step?", "options": {"A": "Retrieving instructions from memory", "B": "Translating instructions into commands", "C": "Processing the command", "D": "Writing the result to memory"}, "answer": "A"},
+{"question": "In the machine cycle, what is the function of the 'Decode' step?", "options": {"A": "Writing the result to memory", "B": "Retrieving instructions from memory", "C": "Translating instructions into computer commands", "D": "Processing the command physically"}, "answer": "C"},
+{"question": "In the machine cycle, what is the function of the 'Execute' step?", "options": {"A": "Writing the result to memory", "B": "Processing the command", "C": "Retrieving instructions from memory", "D": "Translating instructions into commands"}, "answer": "B"},
+{"question": "In the machine cycle, what is the function of the 'Store' step?", "options": {"A": "Writing the result to memory", "B": "Processing the command", "C": "Retrieving instructions from memory", "D": "Translating instructions into commands"}, "answer": "A"},
+{"question": "How do computers fundamentally represent data?", "options": {"A": "Using the decimal system", "B": "Using the binary system (0s and 1s)", "C": "Using the hexadecimal system", "D": "Using alphabetical characters"}, "answer": "B"},
+{"question": "What is the smallest unit of data in a computer?", "options": {"A": "Byte", "B": "Bit", "C": "Megabyte", "D": "Pixel"}, "answer": "B"},
+{"question": "How many bits typically make up one byte?", "options": {"A": "2", "B": "4", "C": "8", "D": "16"}, "answer": "C"},
+{"question": "Which of the following represents 'On' or 'True' in binary computer logic?", "options": {"A": "0", "B": "1", "C": "2", "D": "A"}, "answer": "B"},
+{"question": "Which of the following represents 'Off' or 'False' in binary computer logic?", "options": {"A": "0", "B": "1", "C": "2", "D": "F"}, "answer": "A"},
+{"question": "Which of the following is considered an internal storage solution?", "options": {"A": "USB flash drive", "B": "Cloud storage", "C": "Internal Hard Disk Drive (HDD)", "D": "External Solid State Drive (SSD)"}, "answer": "C"},
+{"question": "Which storage solution allows data access over the internet without needing a physical local drive?", "options": {"A": "Internal storage", "B": "External storage", "C": "Cloud-based storage", "D": "Optical disc storage"}, "answer": "C"},
+{"question": "What is a characteristic of an 'all-in-one' computer?", "options": {"A": "It has no screen", "B": "It combines the monitor and system unit into a single device", "C": "It cannot connect to the internet", "D": "It relies entirely on cloud processing"}, "answer": "B"},
+{"question": "Which computing device is highly portable, primarily uses a touchscreen, and typically lacks a built-in physical keyboard?", "options": {"A": "Desktop computer", "B": "Server", "C": "Tablet", "D": "Mainframe"}, "answer": "C"},
+{"question": "Which of the following is a potential advantage of a desktop computer over a laptop?", "options": {"A": "Greater portability", "B": "Built-in battery for travel", "C": "Easier to upgrade individual hardware components", "D": "Lighter weight"}, "answer": "C"},
+{"question": "What is an input device?", "options": {"A": "A device that displays data to the user", "B": "A device that sends data to the computer for processing", "C": "A device that prints documents", "D": "A device that only stores data"}, "answer": "B"},
+{"question": "Which of the following is classified as an input device?", "options": {"A": "Monitor", "B": "Printer", "C": "Keyboard", "D": "Speaker"}, "answer": "C"},
+{"question": "What is an output device?", "options": {"A": "A device that sends data into the computer", "B": "A device that converts processed data into a human-readable form", "C": "A device that powers the motherboard", "D": "A device that cools the CPU"}, "answer": "B"},
+{"question": "Which of the following is classified as an output device?", "options": {"A": "Mouse", "B": "Microphone", "C": "Webcam", "D": "Monitor"}, "answer": "D"},
+{"question": "A touchscreen functions as which type of device?", "options": {"A": "Input device only", "B": "Output device only", "C": "Both an input and an output device", "D": "Neither input nor output device"}, "answer": "C"},
+{"question": "Which input device is primarily used to control the on-screen pointer and select items?", "options": {"A": "Keyboard", "B": "Mouse", "C": "Scanner", "D": "Microphone"}, "answer": "B"},
+{"question": "Which input device is used to capture audio signals?", "options": {"A": "Speaker", "B": "Monitor", "C": "Microphone", "D": "Printer"}, "answer": "C"},
+{"question": "Which input device digitizes physical documents or photographs into digital images?", "options": {"A": "Webcam", "B": "Scanner", "C": "Projector", "D": "Speaker"}, "answer": "B"},
+{"question": "Which output device generates a hard copy of a digital document?", "options": {"A": "Scanner", "B": "Monitor", "C": "Printer", "D": "Projector"}, "answer": "C"},
+{"question": "Which output device is ideal for displaying a computer screen to a large audience in a room?", "options": {"A": "Webcam", "B": "Microphone", "C": "Projector", "D": "Mouse"}, "answer": "C"},
+{"question": "According to the troubleshooting section, what is a common sign of a hardware problem?", "options": {"A": "The computer running faster than usual", "B": "A hard drive making unusual noise", "C": "The cloud storage expanding automatically", "D": "The printer upgrading its own firmware"}, "answer": "B"},
+{"question": "What is a recommended way to clean a computer keyboard?", "options": {"A": "Washing it with soap and water", "B": "Using compressed air", "C": "Wiping it with a highly wet sponge", "D": "Spraying window cleaner directly onto the keys"}, "answer": "B"},
+{"question": "What is a recommended way to clean a computer display?", "options": {"A": "Using compressed air at close range", "B": "Wiping it with a dry, abrasive towel", "C": "Cleaning it with a lightly damp cloth", "D": "Scrubbing it with household bleach"}, "answer": "C"},
+{"question": "Why should computer air vents be kept free of dust and debris?", "options": {"A": "To increase internet speed", "B": "To prevent the device from becoming too hot", "C": "To improve screen resolution", "D": "To increase hard drive storage capacity"}, "answer": "B"},
+{"question": "What does UPS stand for in the context of computer maintenance?", "options": {"A": "Universal Power System", "B": "Uninterruptable Power Supply", "C": "Unified Processing Server", "D": "Universal Port Standard"}, "answer": "B"},
+{"question": "What is the primary function of an Uninterruptable Power Supply (UPS)?", "options": {"A": "To permanently store backup files", "B": "To protect from power fluctuations and provide backup battery power", "C": "To boost the processing speed of the CPU", "D": "To provide high-speed wireless internet"}, "answer": "B"},
+{"question": "What device specifically protects computer equipment from sudden spikes in electrical voltage?", "options": {"A": "Surge suppressor", "B": "External hard drive", "C": "Cloud server", "D": "Router"}, "answer": "A"},
+{"question": "What is a crucial regular maintenance task to prevent permanent loss of information?", "options": {"A": "Emptying the recycle bin", "B": "Regularly backing up data", "C": "Changing the desktop wallpaper", "D": "Turning the monitor brightness down"}, "answer": "B"},
+{"question": "If you are experiencing display issues, what is a recommended first troubleshooting step?", "options": {"A": "Reinstall the operating system entirely", "B": "Ensure the monitor is properly connected", "C": "Buy a new computer", "D": "Replace the CPU"}, "answer": "B"},
+{"question": "To resolve video card issues, what software-related step should be taken?", "options": {"A": "Format the hard drive", "B": "Delete the operating system", "C": "Update drivers", "D": "Disable the antivirus"}, "answer": "C"}
         ],
         'week4': [
-            {"question": "What is application software?", "options": {"A": "Software that runs the computer", "B": "Programs that help perform specific tasks", "C": "System software", "D": "Device drivers"}, "answer": "B"},
-            {"question": "What is productivity software?", "options": {"A": "Games", "B": "Software for creating documents, spreadsheets, presentations", "C": "Antivirus software", "D": "Web browsers"}, "answer": "B"},
-            {"question": "What are graphics and media apps used for?", "options": {"A": "Creating text documents", "B": "Interacting with digital media", "C": "Managing files", "D": "Sending emails"}, "answer": "B"},
-            {"question": "What are personal interest apps?", "options": {"A": "Business software", "B": "Tools to pursue hobbies and interests", "C": "System utilities", "D": "Network tools"}, "answer": "B"},
-            {"question": "What are communications apps?", "options": {"A": "Word processors", "B": "Tools for sharing or receiving information", "C": "Spreadsheet programs", "D": "Databases"}, "answer": "B"},
-            {"question": "What are device management apps?", "options": {"A": "Social media apps", "B": "Tools for maintaining computer or device", "C": "Games", "D": "Web browsers"}, "answer": "B"},
-            {"question": "What is a native app?", "options": {"A": "An app from an app store", "B": "Written for a specific operating system", "C": "A web app", "D": "An offline app"}, "answer": "B"},
-            {"question": "What is a web app?", "options": {"A": "Installed on the computer", "B": "Accessed over the Internet in a browser", "C": "A type of game", "D": "A mobile app only"}, "answer": "B"},
-            {"question": "What is a mobile app?", "options": {"A": "Desktop software", "B": "Apps accessed on smartphone or tablet", "C": "Web-based software", "D": "Server software"}, "answer": "B"},
-            {"question": "What is mobile-first design?", "options": {"A": "Designing for desktop first", "B": "Building apps for mobile devices first due to restrictions", "C": "Creating phone rings", "D": "Designing mobile phones"}, "answer": "B"},
-            {"question": "What is responsive design?", "options": {"A": "Web app that adapts to different screen sizes", "B": "Fast loading websites", "C": "Animated websites", "D": "Video streaming"}, "answer": "A"},
-            {"question": "What is m-commerce?", "options": {"A": "Mail commerce", "B": "Mobile commerce for making purchases with mobile devices", "C": "Machine commerce", "D": "Mass commerce"}, "answer": "B"},
-            {"question": "What is a productivity suite?", "options": {"A": "Single program", "B": "Collection of related programs like Office", "C": "A game", "D": "A web browser"}, "answer": "B"},
-            {"question": "What is Microsoft Office an example of?", "options": {"A": "Web browser", "B": "Productivity suite", "C": "Antivirus software", "D": "Operating system"}, "answer": "B"},
-            {"question": "What can cloud storage in productivity suites provide?", "options": {"A": "Free software", "B": "Collaboration features", "C": "Offline access only", "D": "Hardware"}, "answer": "B"},
-            {"question": "What is local application?", "options": {"A": "Web app", "B": "Installed on computer's hard drive", "C": "Cloud-based software", "D": "Mobile app"}, "answer": "B"},
-            {"question": "What is portable app?", "options": {"A": "App that must be installed", "B": "Runs from removable storage or cloud", "C": "Heavy software", "D": "Desktop only software"}, "answer": "B"},
-            {"question": "How can you interact with mobile apps?", "options": {"A": "Using only keyboard", "B": "Touch the screen", "C": "Using mouse only", "D": "Using voice only"}, "answer": "B"},
-            {"question": "What is an app store?", "options": {"A": "Physical store", "B": "Platform to find and download apps", "C": "Computer shop", "D": "Web browser"}, "answer": "B"},
-            {"question": "What does an app icon represent?", "options": {"A": "File folder", "B": "Represented on desktop by icon or tile", "C": "Document type", "D": "Network connection"}, "answer": "B"},
-            {"question": "Can apps synchronize data?", "options": {"A": "No, never", "B": "Yes, across devices", "C": "Only on one device", "D": "Only when online"}, "answer": "B"},
-            {"question": "What is cross-platform development?", "options": {"A": "Building platforms", "B": "Tools allowing apps to run on multiple platforms", "C": "Learning platforms", "D": "Gaming platforms"}, "answer": "B"},
-            {"question": "What is open source software?", "options": {"A": "Software that costs money", "B": "Source code that can be modified", "C": "Pirated software", "D": "Commercial software only"}, "answer": "B"},
-            {"question": "What is commercial software?", "options": {"A": "Free software", "B": "Sold for profit", "C": "Open source", "D": "Public domain"}, "answer": "B"},
-            {"question": "What is freeware?", "options": {"A": "Trial software", "B": "Free to use software", "C": "Paid software", "D": "Limited software"}, "answer": "B"},
-            {"question": "What is shareware?", "options": {"A": "Free software", "B": "Paid software", "C": "Try before you buy software", "D": "Stolen software"}, "answer": "C"},
-            {"question": "What does software license give you?", "options": {"A": "Right to copy indefinitely", "B": "Legal permission to use software", "C": "Ownership of the code", "D": "Right to resell"}, "answer": "B"},
-            {"question": "What is a software update?", "options": {"A": "Delete old files", "B": "Adds new features and fixes bugs", "C": "Formats the computer", "D": "Creates backups"}, "answer": "B"},
-            {"question": "What is a software bug?", "options": {"A": "A feature", "B": "An error in the code", "C": "A hardware problem", "D": "A computer game"}, "answer": "B"},
-            {"question": "What is a software patch?", "options": {"A": "Clothing repair", "B": "Fix for software problems", "C": "New feature", "D": "Hardware part"}, "answer": "B"},
-            {"question": "What is system software?", "options": {"A": "Application software", "B": "Software that runs the computer", "C": "Games", "D": "Web browsers"}, "answer": "B"},
-            {"question": "What is an operating system?", "options": {"A": "A game", "B": "Program that manages computer operation", "C": "A document", "D": "A network"}, "answer": "B"},
-            {"question": "What is utility software?", "options": {"A": "Helps maintain computer", "B": "Games", "C": "Word processing", "D": "Spreadsheets"}, "answer": "A"},
-            {"question": "What is a driver?", "options": {"A": "Car driver", "B": "Software that allows hardware to communicate", "C": "A game", "D": "Network cable"}, "answer": "B"},
-        ], // 修正處：補上了這裡的括號與逗號
+            {"question": "Which of the following apps is typically used to consult directions while walking?", "options": {"A": "Email app", "B": "Mapping app", "C": "Calendar app", "D": "Mobile payment app"}, "answer": "B"},
+{"question": "What type of app allows you to pay for items using your smartphone?", "options": {"A": "Messaging app", "B": "Mobile payment app", "C": "Camera app", "D": "Clock app"}, "answer": "B"},
+{"question": "What does EULA stand for in the context of software licensing?", "options": {"A": "Enterprise User License Agreement", "B": "End User License Agreement", "C": "Electronic Utility License Application", "D": "External User Log Access"}, "answer": "B"},
+{"question": "Which type of license grants permission for only one installation of a software program?", "options": {"A": "Site license", "B": "Multiple-user license agreement", "C": "Single user license (EULA)", "D": "Open-source license"}, "answer": "C"},
+{"question": "What does a multiple-user license agreement allow?", "options": {"A": "It allows an unlimited number of users to access the program", "B": "It lets a specified number of users access the program or app", "C": "It grants permission for only one installation globally", "D": "It permits users to freely modify the source code"}, "answer": "B"},
+{"question": "Which software license allows an organization to provide access to as many users as they want?", "options": {"A": "Single user license", "B": "Shareware license", "C": "Freeware license", "D": "Site license"}, "answer": "D"},{"question": "What is the primary benefit of completing software registration?", "options": {"A": "It is strictly required to run any software", "B": "It typically allows for syncing of accounts across multiple devices", "C": "It automatically uninstalls unused programs", "D": "It converts freeware into public domain software"}, "answer": "B"},
+{"question": "What process is usually required upfront or after a trial period to continue using a software application?", "options": {"A": "Deactivation", "B": "Uninstalling", "C": "Activation", "D": "Formatting"}, "answer": "C"},
+{"question": "What is the recommended way to remove an app from your computer?", "options": {"A": "Delete the desktop shortcut", "B": "Drag the program folder to the recycle bin", "C": "Use the uninstaller tool that comes with the operating system", "D": "Turn off the computer during execution"}, "answer": "C"},
+{"question": "Why is it beneficial to uninstall unused apps from a device?", "options": {"A": "It increases the CPU's physical clock speed", "B": "It frees up storage space", "C": "It upgrades the operating system version", "D": "It installs security patches automatically"}, "answer": "B"},
+{"question": "What is one primary reason developers release software updates?", "options": {"A": "To downgrade the operating system", "B": "To provide additional functionality or address security issues", "C": "To convert native mobile apps to desktop apps", "D": "To bypass EULA agreements"}, "answer": "B"},
+{"question": "How do mobile apps typically handle software updates?", "options": {"A": "They require manual installation from a CD", "B": "They update automatically", "C": "They never require updates", "D": "They require purchasing a new license each time"}, "answer": "B"},
+{"question": "Which of the following is considered a specific type of software update?", "options": {"A": "Patch", "B": "EULA", "C": "Registration", "D": "Uninstaller"}, "answer": "A"},
+{"question": "Besides patches and upgrades, what is another common category of software update?", "options": {"A": "Site license", "B": "Service packs", "C": "Mobile payment", "D": "Activation"}, "answer": "B"},
+{"question": "What is the first troubleshooting step recommended when a software crash occurs?", "options": {"A": "Reinstall the operating system immediately", "B": "Note any error messages that are displayed", "C": "Buy a replacement hard drive", "D": "Unplug the computer from the wall"}, "answer": "B"},
+{"question": "When working with software, how can you avoid losing data in the event of a crash?", "options": {"A": "Save data periodically while working", "B": "Only work in the computer's safe mode", "C": "Never connect the computer to the internet", "D": "Uninstall the app before saving"}, "answer": "A"},
+{"question": "If an app crashes, what is a simple step to try after noting the error messages?", "options": {"A": "Format the hard drive", "B": "Restart the program", "C": "Delete the system registry", "D": "Upgrade the CPU hardware"}, "answer": "B"},
+{"question": "If restarting a crashed program does not resolve the issue, what is the next logical troubleshooting step?", "options": {"A": "Reboot the computer and try running the program again", "B": "Replace the computer monitor", "C": "Buy a new software license", "D": "Disconnect the external mouse"}, "answer": "A"},
+{"question": "If a program continuously crashes, what should you check for to see if the developer has fixed the bug?", "options": {"A": "A new EULA", "B": "Software updates", "C": "A different hardware manufacturer", "D": "A site license"}, "answer": "B"},
+{"question": "What is a useful way to find known solutions to specific software crashes?", "options": {"A": "Call the internet service provider", "B": "Search reliable Internet sources for known solutions", "C": "Delete all temporary files manually", "D": "Turn off the network firewall"}, "answer": "B"},
+{"question": "Which troubleshooting step helps ensure malicious code is not causing software crashes?", "options": {"A": "Disable the antivirus software entirely", "B": "Scan for viruses or malware", "C": "Download random software from unofficial sources", "D": "Ignore system security warnings"}, "answer": "B"},
+{"question": "What is considered a final troubleshooting step for a persistently malfunctioning app?", "options": {"A": "Uninstall and reinstall the app", "B": "Never use the computer again", "C": "Upgrade the computer's power supply", "D": "Delete the operating system"}, "answer": "A"},
+{"question": "What type of software is used to create, edit, format, and print text-based documents?", "options": {"A": "Spreadsheet software", "B": "Word processing software", "C": "Database software", "D": "Presentation software"}, "answer": "B"},
+{"question": "Which productivity app is best suited for organizing data in rows and columns and performing mathematical calculations?", "options": {"A": "Word processor", "B": "Presentation app", "C": "Spreadsheet software", "D": "Note-taking app"}, "answer": "C"},
+{"question": "What kind of application is typically used to create visual slide decks for audiences?", "options": {"A": "Presentation software", "B": "Spreadsheet software", "C": "Database management system", "D": "Anti-virus software"}, "answer": "A"},
+{"question": "What type of software allows users to store, organize, and retrieve large amounts of structured data?", "options": {"A": "Word processor", "B": "Database software", "C": "Graphics software", "D": "Communication software"}, "answer": "B"},
+{"question": "Software that is hosted on a central server and accessed via a web browser over the internet is known as what?", "options": {"A": "Native app", "B": "Desktop app", "C": "Software as a Service (SaaS)", "D": "Standalone software"}, "answer": "C"},
+
+{"question": "What is a native app?", "options": {"A": "An app written for a specific operating system and installed directly on the device", "B": "An app accessed solely through a web browser without installation", "C": "An app that only runs on outdated hardware", "D": "An app that does not require a CPU to run"}, "answer": "A"},
+{"question": "Which of the following describes Freeware?", "options": {"A": "Software distributed free of charge but with restricted access to source code", "B": "Software that requires a paid monthly subscription", "C": "Software provided for a limited trial period only", "D": "Software that is custom-built for a specific enterprise"}, "answer": "A"},
+{"question": "What is Shareware?", "options": {"A": "Software that is completely free forever with open source code access", "B": "Software distributed free for a trial period, after which payment is required", "C": "Software used exclusively to manage computer hardware performance", "D": "Software that automatically uninstalls itself after one use"}, "answer": "B"},
+{"question": "Open-source software is characterized by what primary feature?", "options": {"A": "It cannot be modified by the end user", "B": "It is always highly expensive for enterprise use", "C": "Its source code is publicly available for modification and enhancement", "D": "It only runs on large mainframe computers"}, "answer": "C"},
+{"question": "Public domain software is software that:", "options": {"A": "Is protected by strict international copyright laws", "B": "Has no copyright restrictions and can be used freely by anyone", "C": "Requires a site license for educational use", "D": "Is only available to government employees"}, "answer": "B"},
+{"question": "What type of app is specifically designed for use on mobile devices like smartphones and tablets?", "options": {"A": "Mainframe app", "B": "Mobile app", "C": "Legacy app", "D": "Desktop app"}, "answer": "B"},
+{"question": "Software designed to help users perform specific personal, educational, or business tasks is categorized as:", "options": {"A": "System software", "B": "Application software", "C": "Utility software", "D": "Firmware"}, "answer": "B"},
+{"question": "Which of the following is considered System Software rather than Application Software?", "options": {"A": "Operating System (e.g., Windows, macOS)", "B": "Web browser", "C": "Word processor", "D": "Video game"}, "answer": "A"},
+{"question": "A 'Patch' in software terminology is primarily released to:", "options": {"A": "Completely replace an old application with a new version", "B": "Fix a specific bug or address a security vulnerability", "C": "Change the software's End User License Agreement", "D": "Uninstall the software remotely"}, "answer": "B"},
+{"question": "An 'Upgrade' to an application typically implies:", "options": {"A": "A minor bug fix that happens automatically", "B": "A new version of the software with significant new features or interface changes", "C": "Uninstalling the software permanently", "D": "Downgrading the user license from site to single-user"}, "answer": "B"},
+{"question": "What does a QR code scanner app typically do when it scans a code on a billboard?", "options": {"A": "It deletes the user's contacts to save space", "B": "It interprets the visual code to open a webpage or trigger an action on the device", "C": "It updates the device's operating system", "D": "It installs a virus automatically to test security"}, "answer": "B"},
+{"question": "What type of app would you primarily use to listen to playlists while working out?", "options": {"A": "Streaming app", "B": "Spreadsheet app", "C": "Word processing app", "D": "Database app"}, "answer": "A"}
+],
         'week5': [
-            {"question": "What is the main function of an operating system?", "options": {"A": "Create documents", "B": "Manage computer hardware and software resources", "C": "Connect to the internet", "D": "Design graphics"}, "answer": "B"},
-            {"question": "What is system software?", "options": {"A": "Application software", "B": "Software that runs the computer including OS and utilities", "C": "Games", "D": "Web browsers"}, "answer": "B"},
-            {"question": "What is the desktop in an OS?", "options": {"A": "A folder", "B": "The main working area", "C": "A type of file", "D": "The recycle bin"}, "answer": "B"},
-            {"question": "What is a file folder used for?", "options": {"A": "Storing papers", "B": "Organizing and grouping files", "C": "Deleting files", "D": "Running programs"}, "answer": "B"},
-            {"question": "What does backup mean?", "options": {"A": "Delete files permanently", "B": "Create a copy of data for safety", "C": "Format the hard drive", "D": "Install new software"}, "answer": "B"},
-            {"question": "What is cloud storage?", "options": {"A": "Storage in the sky", "B": "Online storage accessible from anywhere", "C": "A type of hard drive", "D": "Computer memory"}, "answer": "B"},
-            {"question": "What is file extension?", "options": {"A": "The file name", "B": "The part after the dot that indicates file type", "C": "The file size", "D": "The file date"}, "answer": "B"},
-            {"question": "What is a directory?", "options": {"A": "A type of file", "B": "A folder for organizing files", "C": "A document", "D": "A program"}, "answer": "B"},
-            {"question": "What is a file path?", "options": {"A": "A road for files", "B": "Location of a file in the system", "C": "A type of folder", "D": "A document type"}, "answer": "B"},
-            {"question": "What does delete mean?", "options": {"A": "Save file", "B": "Remove file", "C": "Copy file", "D": "Open file"}, "answer": "B"},
-            {"question": "What is the Recycle Bin?", "options": {"A": "Permanent deletion", "B": "Temporary storage for deleted files", "C": "A program", "D": "A folder"}, "answer": "B"},
-            {"question": "What does copy do?", "options": {"A": "Move file to new location", "B": "Create duplicate of file", "C": "Delete file", "D": "Rename file"}, "answer": "B"},
-            {"question": "What does cut do?", "options": {"A": "Copy to clipboard for moving", "B": "Permanently delete", "C": "Create backup", "D": "Open file"}, "answer": "A"},
-            {"question": "What does paste do?", "options": {"A": "Insert copied/cut content", "B": "Close a file", "C": "Save file", "D": "Delete file"}, "answer": "A"},
-            {"question": "What is a file name?", "options": {"A": "Type of file", "B": "Identifier for a file", "C": "File extension", "D": "File size"}, "answer": "B"},
-            {"question": "What is save?", "options": {"A": "Close program", "B": "Store data to file", "C": "Delete data", "D": "Print document"}, "answer": "B"},
-            {"question": "What is open?", "options": {"A": "Close file", "B": "Access file for use", "C": "Delete file", "D": "Copy file"}, "answer": "B"},
-            {"question": "What is a menu?", "options": {"A": "List of food", "B": "List of commands", "C": "File type", "D": "Storage device"}, "answer": "B"},
-            {"question": "What is a toolbar?", "options": {"A": "Tool for building", "B": "Buttons for quick commands", "C": "Type of file", "D": "Storage location"}, "answer": "B"},
-            {"question": "What is a window?", "options": {"A": "Glass pane", "B": "Area for running programs", "C": "File type", "D": "Network"}, "answer": "B"},
-            {"question": "What is folder hierarchy?", "options": {"A": "Flat list of files", "B": "Organized structure of folders", "C": "Single folder", "D": "Deleted files"}, "answer": "B"},
-            {"question": "What is rename?", "options": {"A": "Delete file", "B": "Change file name", "C": "Copy file", "D": "Move file"}, "answer": "B"},
-            {"question": "What is a shortcut?", "options": {"A": "Long process", "B": "Quick link to file/program", "C": "Delete button", "D": "Print command"}, "answer": "B"},
-            {"question": "What is drag and drop?", "options": {"A": "Throw away files", "B": "Move files by dragging", "C": "Open files", "D": "Delete files"}, "answer": "B"},
-            {"question": "What is right-click?", "options": {"A": "Left mouse button", "B": "Show context menu", "C": "Select all", "D": "Close program"}, "answer": "B"},
-            {"question": "What is a context menu?", "options": {"A": "Restaurant menu", "B": "Menu with options for item", "C": "File list", "D": "Network menu"}, "answer": "B"},
-            {"question": "What is a file attribute?", "options": {"A": "File name", "B": "Property of file (hidden, read-only)", "C": "File size", "D": "File date"}, "answer": "B"},
-            {"question": "What is disk defragmentation?", "options": {"A": "Delete disk", "B": "Organize file pieces for better performance", "C": "Format disk", "D": "Backup disk"}, "answer": "B"},
-            {"question": "What is disk cleanup?", "options": {"A": "Wash the disk", "B": "Remove unnecessary files", "C": "Install software", "D": "Copy files"}, "answer": "B"},
-            {"question": "What is scan disk?", "options": {"A": "Watch TV", "B": "Check disk for errors", "C": "Delete files", "D": "Format disk"}, "answer": "B"},
-            {"question": "What is system restore?", "options": {"A": "Break the system", "B": "Return to previous state", "C": "Delete system", "D": "Install system"}, "answer": "B"},
-            {"question": "What is sleep mode?", "options": {"A": "Computer is off", "B": "Low power state", "C": "Deleted files", "D": "Error state"}, "answer": "B"},
-            {"question": "What is hibernate?", "options": {"A": "Computer sleeping", "B": "Save state to disk and power off", "C": "Delete memory", "D": "Error message"}, "answer": "B"},
-            {"question": "What is a user account?", "options": {"A": "Bank account", "B": "Personal profile for using computer", "C": "Email account", "D": "Social media"}, "answer": "B"},
-            {"question": "What is multitasking?", "options": {"A": "Using multiple computers", "B": "Running multiple programs at same time", "C": "Single task only", "D": "Playing games"}, "answer": "B"},
-            {"question": "What is Windows?", "options": {"A": "A type of door", "B": "Desktop operating system by Microsoft", "C": "A game", "D": "Network"}, "answer": "B"},
-            {"question": "What is macOS?", "options": {"A": "Desktop OS by Apple", "B": "A type of router", "C": "A game", "D": "Network"}, "answer": "A"},
-            {"question": "What is Linux?", "options": {"A": "A type of animal", "B": "Open source operating system", "C": "A game", "D": "Network"}, "answer": "B"}
+            {"question": "What does 'System software' refer to?", "options": {"A": "Only the physical hardware of a computer", "B": "The software that runs a computer, including the operating system and the utilities", "C": "Applications used for word processing and spreadsheets", "D": "Web browsers and email clients"}, "answer": "B"},
+{"question": "How is an Operating System (OS) defined in the material?", "options": {"A": "A physical component that stores data permanently", "B": "A program that manages the complete operation of your computer or mobile device and lets you interact with it", "C": "A specific type of spreadsheet application", "D": "A network cable connecting multiple computers"}, "answer": "B"},
+
+{"question": "What is the process of starting or restarting a computer or mobile device called?", "options": {"A": "Spooling", "B": "Paging", "C": "Booting", "D": "Buffering"}, "answer": "C"},
+
+{"question": "Which of the following describes a 'Command-line interface'?", "options": {"A": "An interface where users interact with visual menus and visual images", "B": "An interface that requires a touchscreen to operate", "C": "An interface where a user types commands represented by short keywords or abbreviations", "D": "An interface exclusively used for video editing"}, "answer": "C"},
+{"question": "What does GUI stand for?", "options": {"A": "Graphical User Interface", "B": "General Utility Information", "C": "Global Unified Internet", "D": "Guided User Instructions"}, "answer": "A"},
+{"question": "How do you interact with a Graphical User Interface (GUI)?", "options": {"A": "By typing lines of complex code", "B": "By using visual menus, visual images, and icons", "C": "By manually adjusting internal hardware switches", "D": "By speaking binary commands into a microphone"}, "answer": "B"},
+
+{"question": "What does an operating system use if a computer is running multiple programs and runs out of RAM?", "options": {"A": "Read-Only Memory (ROM)", "B": "Virtual memory", "C": "A network server", "D": "A larger monitor"}, "answer": "B"},
+{"question": "What is 'Virtual memory'?", "options": {"A": "A cloud storage system for backing up files", "B": "A portion of a storage medium that the operating system allocates to function as additional RAM", "C": "Memory used specifically for rendering video game graphics", "D": "A temporary cache located inside the CPU"}, "answer": "B"},
+
+{"question": "In the context of memory management, what is a 'Swap file'?", "options": {"A": "A file used to transfer data between two computers via Bluetooth", "B": "The area of the hard drive used for virtual memory", "C": "A file that permanently deletes other files", "D": "An executable file that installs new software"}, "answer": "B"},
+{"question": "What is the technique called when the operating system swaps items between memory and storage?", "options": {"A": "Booting", "B": "Formatting", "C": "Paging", "D": "Phishing"}, "answer": "C"},
+{"question": "What is a 'Buffer' in an operating system?", "options": {"A": "A tool used to clean the monitor", "B": "A segment of memory or storage in which items are placed while waiting to be transferred from an input device or to an output device", "C": "A permanent storage location for user documents", "D": "A security feature that blocks viruses"}, "answer": "B"},
+{"question": "What process involves sending documents to be printed to a buffer instead of sending them immediately to the printer?", "options": {"A": "Spooling", "B": "Paging", "C": "Compiling", "D": "Booting"}, "answer": "A"},
+
+{"question": "What is the primary function of a 'Device driver'?", "options": {"A": "To power the computer on and off", "B": "A small program that tells the operating system how to communicate with a specific device", "C": "To physically move data along the motherboard bus", "D": "To scan the computer for malware"}, "answer": "B"},
+{"question": "What does 'Plug and Play' mean in the context of operating systems?", "options": {"A": "The operating system automatically configures new devices as you install or connect them", "B": "You must write code to make a device work", "C": "Devices require a complex manual installation process using multiple CDs", "D": "The device only works while playing video games"}, "answer": "A"},
+{"question": "Which tool in an operating system assesses and reports information about various computer resources and devices?", "options": {"A": "Device driver", "B": "Performance monitor", "C": "Web browser", "D": "Word processor"}, "answer": "B"},
+{"question": "Which of the following is considered a Desktop Operating System?", "options": {"A": "Windows Server", "B": "Android", "C": "iOS", "D": "macOS"}, "answer": "D"},
+{"question": "Which operating system is a multitasking OS developed in the early 1970s and is used on both servers and desktops?", "options": {"A": "UNIX", "B": "Android", "C": "Chrome OS", "D": "iOS"}, "answer": "A"},
+{"question": "Which operating system is known for being a popular, UNIX-based OS that is open source?", "options": {"A": "Windows", "B": "macOS", "C": "Linux", "D": "iOS"}, "answer": "C"},
+{"question": "What is Chrome OS primarily designed to work with?", "options": {"A": "Only local, offline desktop applications", "B": "Web apps", "C": "High-end 3D rendering software", "D": "Mainframe computer systems"}, "answer": "B"},
+{"question": "What is a defining characteristic of a Server Operating System?", "options": {"A": "It is designed strictly for a single user without internet access", "B": "It is a multiuser operating system that organizes and coordinates how multiple users access and share resources on a network", "C": "It only runs on smartphones", "D": "It lacks file management capabilities"}, "answer": "B"},
+{"question": "Which of the following is an open source mobile operating system developed by Google?", "options": {"A": "iOS", "B": "Windows 10", "C": "Android", "D": "macOS"}, "answer": "C"},
+{"question": "Which mobile operating system is a proprietary, closed system developed by Apple?", "options": {"A": "Android", "B": "Linux", "C": "Chrome OS", "D": "iOS"}, "answer": "D"},
+{"question": "On a computer desktop, what is a 'Window'?", "options": {"A": "A piece of glass on the monitor", "B": "A rectangular area that displays data and information", "C": "A physical keyboard button", "D": "A printed document"}, "answer": "B"},
+{"question": "What is the purpose of a 'Dialog box'?", "options": {"A": "To play audio files aloud", "B": "A window with controls that lets you tell the operating system how to complete a command", "C": "To format a hard drive automatically", "D": "To send email messages"}, "answer": "B"},
+{"question": "What type of file contains words, numbers, and pictures that a user can manipulate?", "options": {"A": "Executable file", "B": "System driver", "C": "Data file", "D": "Boot file"}, "answer": "C"},
+{"question": "What does an 'Executable file' contain?", "options": {"A": "Only plain text for reading", "B": "The instructions that tell the computer how to perform a specific task", "C": "A list of network passwords", "D": "Audio tracks for music playback"}, "answer": "B"},
+{"question": "What is a 'Folder' (or directory) used for?", "options": {"A": "To act as the Central Processing Unit", "B": "To supply power to the hard drive", "C": "A named location on a storage medium that usually contains related documents", "D": "To connect the computer to the internet"}, "answer": "C"},
+{"question": "What is a 'File name extension'?", "options": {"A": "The first letter of a file name", "B": "A physical attachment to an external hard drive", "C": "A three- or four-letter sequence, preceded by a period, at the end of a file name", "D": "The password required to open a file"}, "answer": "C"},
+{"question": "What does a file name extension typically identify?", "options": {"A": "The file as a folder or a directory", "B": "The file as a data file or an executable file, and the type of app on which it can be used", "C": "The physical location of the server hosting the file", "D": "The exact date and time the file was created"}, "answer": "B"},
+{"question": "According to file placement rules, which of the following is true?", "options": {"A": "A folder can include multiple files with the exact same name and the exact same type", "B": "Each folder can only include one file with the same name of the same type", "C": "Files cannot be moved between folders", "D": "All files must be saved on the desktop"}, "answer": "B"},
+{"question": "What is the file management tool called in Windows 10?", "options": {"A": "Finder", "B": "File Explorer", "C": "Task Manager", "D": "Control Panel"}, "answer": "B"},
+{"question": "What is the file management tool called in macOS?", "options": {"A": "File Explorer", "B": "Finder", "C": "Siri", "D": "Device Manager"}, "answer": "B"},
+{"question": "When you create a new folder, what is the default name usually assigned by the file manager?", "options": {"A": "Untitled Document", "B": "New folder", "C": "Data Backup", "D": "System File"}, "answer": "B"},
+{"question": "Which of the following is an option for personalizing the display settings of an operating system?", "options": {"A": "Changing the CPU clock speed", "B": "Adding more physical RAM", "C": "Changing the theme, desktop background, or screen saver", "D": "Updating the printer driver"}, "answer": "C"},
+{"question": "Which component on the macOS desktop contains icons for frequently used programs and tools at the bottom of the screen?", "options": {"A": "Start Menu", "B": "Dock", "C": "Taskbar", "D": "Status menu"}, "answer": "B"},
+{"question": "Which component is characteristic of the Windows OS desktop interface?", "options": {"A": "Siri digital assistant icon in the Dock", "B": "Start menu with icons and tiles", "C": "Menu bar fixed at the very top of the screen", "D": "Finder window by default"}, "answer": "B"},
+{"question": "If you are having trouble opening a saved file, how can you navigate to it?", "options": {"A": "Unplug the mouse and plug it back in", "B": "Use the file manager or the Open dialog box from within a program", "C": "Restart the router", "D": "Change the desktop background"}, "answer": "B"},
+{"question": "How are file name extensions usually applied when you save a new file in a program?", "options": {"A": "You must manually code them in binary", "B": "They are added automatically", "C": "They are generated randomly each time", "D": "They require a separate software tool to apply"}, "answer": "B"},
+{"question": "Which OS function helps manage a computer's internet connection?", "options": {"A": "Spooling print jobs", "B": "Controlling network and security", "C": "Paging virtual memory", "D": "Formatting the hard disk drive"}, "answer": "B"}
         ],
         'week6': [
-            {"question": "What are the three main types of computer hazards?", "options": {"A": "Fire, water, electricity", "B": "Information, environment, health", "C": "Software, hardware, network", "D": "Data, files, programs"}, "answer": "B"},
-            {"question": "What does information hazard refer to?", "options": {"A": "Physical injury", "B": "Data and programs theft", "C": "Eye strain", "D": "E-waste"}, "answer": "B"},
-            {"question": "What does environmental hazard refer to?", "options": {"A": "Viruses", "B": "Toxic electronic components", "C": "Poor posture", "D": "Hackers"}, "answer": "B"},
-            {"question": "What does health hazard include?", "options": {"A": "Data loss", "B": "Eye strain, poor posture, muscle fatigue", "C": "Identity theft", "D": "E-waste"}, "answer": "B"},
-            {"question": "What is a risk?", "options": {"A": "Certain outcome", "B": "Possibility of injury or loss", "C": "Guaranteed safety", "D": "No danger"}, "answer": "B"},
-            {"question": "What are online risks?", "options": {"A": "Offline activities only", "B": "Online banking, e-commerce, fake websites, social media", "C": "Using printers", "D": "Physical mail"}, "answer": "B"},
-            {"question": "What is phishing?", "options": {"A": "A type of fishing", "B": "Fraudulent attempt to obtain sensitive information", "C": "A computer game", "D": "A programming language"}, "answer": "B"},
-            {"question": "What is malware?", "options": {"A": "A type of hardware", "B": "Malicious software to harm computers", "C": "A backup system", "D": "An operating system"}, "answer": "B"},
-            {"question": "What is a firewall?", "options": {"A": "A physical wall", "B": "Security system that monitors network traffic", "C": "A cooling device", "D": "A storage device"}, "answer": "B"},
-            {"question": "What does antivirus software do?", "options": {"A": "Speeds up computer", "B": "Detects and removes malicious software", "C": "Creates new files", "D": "Manages email"}, "answer": "B"},
-            {"question": "What is a strong password characteristic?", "options": {"A": "Your birthday", "B": "The word password", "C": "Mix of letters, numbers, symbols", "D": "Your pet name"}, "answer": "C"},
-            {"question": "What should you do with suspicious email?", "options": {"A": "Click all links", "B": "Reply with personal info", "C": "Report and delete it", "D": "Forward to friends"}, "answer": "C"},
-            {"question": "What is encryption?", "options": {"A": "Makes files larger", "B": "Converts data into secure format", "C": "Deletes files", "D": "Speeds up processing"}, "answer": "B"},
-            {"question": "What is two-factor authentication?", "options": {"A": "Using two passwords", "B": "Using two different verification methods", "C": "Logging in twice", "D": "Having two accounts"}, "answer": "B"},
-            {"question": "What is cyberbullying?", "options": {"A": "Playing video games", "B": "Using digital devices to harass others", "C": "Online shopping", "D": "Creating websites"}, "answer": "B"},
-            {"question": "What is e-waste?", "options": {"A": "Recycled paper", "B": "Discarded electronic devices", "C": "Email messages", "D": "Computer code"}, "answer": "B"},
-            {"question": "What does SEM stand for?", "options": {"A": "Secure Email Message", "B": "Sustainable Electronics Management", "C": "Software Engineering Method", "D": "System Error Management"}, "answer": "B"},
-            {"question": "What is the first step in SEM?", "options": {"A": "Donate", "B": "Buy green products", "C": "Recycle", "D": "Throw away"}, "answer": "B"},
-            {"question": "What can you do with old but functional equipment?", "options": {"A": "Throw away", "B": "Donate to school or charity", "C": "Sell to strangers", "D": "Hide it"}, "answer": "B"},
-            {"question": "What is RSI?", "options": {"A": "Radio Signal Internet", "B": "Repetitive strain injury", "C": "Remote System Installation", "D": "Rapid Software Install"}, "answer": "B"},
-            {"question": "What causes repetitive strain injury?", "options": {"A": "One-time heavy lifting", "B": "Repeating same activity over long time", "C": "Using computer once", "D": "No computer use"}, "answer": "B"},
-            {"question": "What is proper posture when using computer?", "options": {"A": "Slouching in chair", "B": "Back straight, feet flat", "C": "Lying down", "D": "Standing only"}, "answer": "B"},
-            {"question": "What is technology addiction?", "options": {"A": "Learning new tech", "B": "Obsessed with using technology devices", "C": "Using computer occasionally", "D": "Installing software"}, "answer": "B"},
-            {"question": "What is a sedentary lifestyle?", "options": {"A": "Active sports", "B": "Little physical activity from too much sitting", "C": "Walking everywhere", "D": "Exercising daily"}, "answer": "B"},
-            {"question": "What is identity theft?", "options": {"A": "Losing ID card", "B": "Stealing personal information", "C": "Getting new passport", "D": "Using your own ID"}, "answer": "B"},
-            {"question": "What is data privacy?", "options": {"A": "Making data public", "B": "Protecting personal data", "C": "Sharing all information", "D": "Deleting all files"}, "answer": "B"},
-            {"question": "What is personal information?", "options": {"A": "Public data", "B": "Data that identifies you", "C": "Computer files", "D": "Network addresses"}, "answer": "B"},
-            {"question": "What is a VPN?", "options": {"A": "Very Personal Network", "B": "Virtual Private Network for secure connection", "C": "Video Player New", "D": "Visual Processing Node"}, "answer": "B"},
-            {"question": "What is a cookie?", "options": {"A": "A type of food", "B": "Small data file stored by websites", "C": "A computer virus", "D": "A network cable"}, "answer": "B"},
-            {"question": "What is a password manager?", "options": {"A": "Person who manages passwords", "B": "Tool to securely store passwords", "C": "A type of virus", "D": "An email service"}, "answer": "B"},
-            {"question": "What is biometric security?", "options": {"A": "Using passwords", "B": "Using physical traits like fingerprints", "C": "Using keycards", "D": "Writing passwords"}, "answer": "B"},
-            {"question": "What is a security audit?", "options": {"A": "Checking computer speed", "B": "Reviewing security measures", "C": "Cleaning the keyboard", "D": "Installing software"}, "answer": "B"},
-            {"question": "What is secure browsing?", "options": {"A": "Using any website", "B": "Using encrypted and safe websites (HTTPS)", "C": "Browsing without screen", "D": "Using old browsers"}, "answer": "B"},
-            {"question": "What is a virus signature?", "options": {"A": "Computer signature", "B": "Unique pattern that identifies malware", "C": "Email signature", "D": "Password pattern"}, "answer": "B"},
-            {"question": "What does backup mean?", "options": {"A": "Delete files", "B": "Create copy of data for recovery", "C": "Format disk", "D": "Install software"}, "answer": "B"},
-            {"question": "What is cloud backup?", "options": {"A": "Backup to local drive only", "B": "Backup to online storage", "C": "Backup to paper", "D": "No backup"}, "answer": "B"},
-            {"question": "What is a VPN used for?", "options": {"A": "Slow down internet", "B": "Create secure encrypted connection", "C": "Delete files", "D": "Block websites"}, "answer": "B"},
-            {"question": "What is social engineering?", "options": {"A": "Building social networks", "B": "Manipulating people to reveal secrets", "C": "Playing social games", "D": "Creating social media"}, "answer": "B"},
-            {"question": "What is a security protocol?", "options": {"A": "Rules for secure communication", "B": "A game", "C": "A type of software", "D": "Network cable"}, "answer": "A"}
+           
+  {
+    "question": "What is the recommended viewing distance from a computer screen to reduce health risks?",
+    "options": {
+      "A": "10 to 15 inches",
+      "B": "18 to 28 inches",
+      "C": "30 to 40 inches",
+      "D": "5 to 10 inches"
+    },
+    "answer": "B"
+  },
+  {
+    "question": "What is the recommended proper angle for arms and elbows when using a computer?",
+    "options": {
+      "A": "About 45 degrees",
+      "B": "About 90 degrees",
+      "C": "About 120 degrees",
+      "D": "About 180 degrees"
+    },
+    "answer": "B"
+  },
+  {
+    "question": "According to the course material, what should the viewing angle be from the center of the screen?",
+    "options": {
+      "A": "10 degrees",
+      "B": "20 degrees",
+      "C": "30 degrees",
+      "D": "40 degrees"
+    },
+    "answer": "B"
+  },
+  {
+    "question": "What is the recommended keyboard height depending on the user's height?",
+    "options": {
+      "A": "15 to 20 inches",
+      "B": "23 to 28 inches",
+      "C": "30 to 35 inches",
+      "D": "10 to 15 inches"
+    },
+    "answer": "B"
+  },
+  {
+    "question": "Which of the following is one of the three main types of computer hazards mentioned in the notes?",
+    "options": {
+      "A": "Financial",
+      "B": "Environment",
+      "C": "Political",
+      "D": "Educational"
+    },
+    "answer": "B"
+  },
+  {
+    "question": "Eye strain, poor posture, and muscle fatigue are examples of which type of computer hazard?",
+    "options": {
+      "A": "Information",
+      "B": "Environment",
+      "C": "Health",
+      "D": "Network"
+    },
+    "answer": "C"
+  },
+  {
+    "question": "Which of the following is considered an online risk in e-commerce shopping?",
+    "options": {
+      "A": "Data backups",
+      "B": "Fake websites",
+      "C": "Ergonomics",
+      "D": "Surge protectors"
+    },
+    "answer": "B"
+  },
+  {
+    "question": "What is considered an INVALID use of a student's telephone number by a school?",
+    "options": {
+      "A": "Calling about an advising appointment",
+      "B": "Sending emergency campus alerts",
+      "C": "Giving it to a credit card company",
+      "D": "Contacting parents for disciplinary issues"
+    },
+    "answer": "C"
+  },
+  {
+    "question": "Which of the following is a VALID use of a patient's medical history by a hospital?",
+    "options": {
+      "A": "Selling it to a drug company",
+      "B": "Referring to past procedures upon admission",
+      "C": "Giving it to a local merchant",
+      "D": "Publishing it on a public website"
+    },
+    "answer": "B"
+  },
+  {
+    "question": "What is a recommended strategy to protect personal information online?",
+    "options": {
+      "A": "Always use your real name in forms",
+      "B": "Use your social media accounts to log into other sites",
+      "C": "Give out maximum information",
+      "D": "Request to be removed from mailing lists"
+    },
+    "answer": "D"
+  },
+  {
+    "question": "When a merchant requires an email address online, what is the best practice?",
+    "options": {
+      "A": "Provide your work email",
+      "B": "Create another email account specifically for this use",
+      "C": "Use your bank's email address",
+      "D": "Refuse to use the website"
+    },
+    "answer": "B"
+  },
+  {
+    "question": "What does SEM stand for in the context of environmental risks?",
+    "options": {
+      "A": "System Error Management",
+      "B": "Sustainable Electronics Management",
+      "C": "Secure Email Maintenance",
+      "D": "Software Encryption Module"
+    },
+    "answer": "B"
+  },
+  {
+    "question": "What is Step 1 of the SEM action steps?",
+    "options": {
+      "A": "Recycle",
+      "B": "Donate",
+      "C": "Buy green",
+      "D": "Destroy"
+    },
+    "answer": "C"
+  },
+  {
+    "question": "What does Step 2 ('Donate') of the SEM action steps involve?",
+    "options": {
+      "A": "Donating to verified recycling centers",
+      "B": "Donating money to environmental groups",
+      "C": "Donating used but functional equipment to a charity",
+      "D": "Donating new equipment to attackers"
+    },
+    "answer": "C"
+  },
+  {
+    "question": "What is Step 3 of the SEM action steps?",
+    "options": {
+      "A": "Recycle",
+      "B": "Re-use",
+      "C": "Reduce",
+      "D": "Repair"
+    },
+    "answer": "A"
+  },
+  {
+    "question": "What does RSI stand for regarding physical health risks?",
+    "options": {
+      "A": "Random System Interruption",
+      "B": "Repetitive Strain Injury",
+      "C": "Remote Server Interface",
+      "D": "Restricted Security Information"
+    },
+    "answer": "B"
+  },
+  {
+    "question": "Typing on a keyboard for multiple hours every day over several years causes RSI due to:",
+    "options": {
+      "A": "Improper technique",
+      "B": "Uninterrupted intensity",
+      "C": "Repetitive activity",
+      "D": "Poor ventilation"
+    },
+    "answer": "C"
+  },
+  {
+    "question": "Slouching in a chair is an example of which cause of RSI?",
+    "options": {
+      "A": "Repetitive activity",
+      "B": "Improper technique",
+      "C": "Uninterrupted intensity",
+      "D": "Mental fatigue"
+    },
+    "answer": "B"
+  },
+  {
+    "question": "Working at a computer all day with no breaks causes RSI primarily due to:",
+    "options": {
+      "A": "Improper technique",
+      "B": "Repetitive activity",
+      "C": "Uninterrupted intensity",
+      "D": "Eye strain"
+    },
+    "answer": "C"
+  },
+  {
+    "question": "Which health risk category includes 'Technology addiction'?",
+    "options": {
+      "A": "Physical Health",
+      "B": "Behavioral Health",
+      "C": "Social Health",
+      "D": "Environmental Health"
+    },
+    "answer": "B"
+  },
+  {
+    "question": "Feeling extreme anxiety if technology devices are not available is a sign of:",
+    "options": {
+      "A": "Cyberstalking",
+      "B": "Repetitive Strain Injury",
+      "C": "Technology addiction",
+      "D": "Social interaction"
+    },
+    "answer": "C"
+  },
+  {
+    "question": "Cyberbullying is considered a risk to which type of health?",
+    "options": {
+      "A": "Physical Health",
+      "B": "Behavioral Health",
+      "C": "Social Health",
+      "D": "Hardware Health"
+    },
+    "answer": "C"
+  },
+  {
+    "question": "Using technology to stalk another person through email and text messages is called:",
+    "options": {
+      "A": "Cyberstalking",
+      "B": "Cyberbullying",
+      "C": "Phishing",
+      "D": "Hoaxing"
+    },
+    "answer": "A"
+  },
+  {
+    "question": "Which of the following is classified as a malicious software program (Malware)?",
+    "options": {
+      "A": "Spam",
+      "B": "Hoax",
+      "C": "Trojan",
+      "D": "Phishing"
+    },
+    "answer": "C"
+  },
+  {
+    "question": "Attacks that attempt to trick the victim into giving valuable information to the attacker are called:",
+    "options": {
+      "A": "Social Engineering",
+      "B": "Malware",
+      "C": "Encryption",
+      "D": "Data mining"
+    },
+    "answer": "A"
+  },
+  {
+    "question": "Sending an email falsely claiming to be from a legitimate enterprise to steal private info is known as:",
+    "options": {
+      "A": "Spam",
+      "B": "Phishing",
+      "C": "Ransomware",
+      "D": "Worm"
+    },
+    "answer": "B"
+  },
+  {
+    "question": "A false warning that pretends to come from a valid source like an IT department is known as a:",
+    "options": {
+      "A": "Trojan",
+      "B": "Hoax",
+      "C": "Virus",
+      "D": "Spam"
+    },
+    "answer": "B"
+  },
+  {
+    "question": "Unwanted email messages sent from an unknown sender to many email accounts are called:",
+    "options": {
+      "A": "Spam",
+      "B": "Hoax",
+      "C": "Phishing",
+      "D": "Cyberstalking"
+    },
+    "answer": "A"
+  },
+  {
+    "question": "Which device defends computer equipment from spikes, surges, and noise?",
+    "options": {
+      "A": "Cable lock",
+      "B": "Uninterruptible power supply (UPS)",
+      "C": "Surge protector",
+      "D": "Digital certificate"
+    },
+    "answer": "C"
+  },
+  {
+    "question": "Which device protects computers against blackouts and brownouts?",
+    "options": {
+      "A": "Surge protector",
+      "B": "Uninterruptible power supply (UPS)",
+      "C": "Biometric scanner",
+      "D": "Router"
+    },
+    "answer": "B"
+  },
+  {
+    "question": "To reduce the risk of computer theft, it is recommended to:",
+    "options": {
+      "A": "Use an uninterruptible power supply",
+      "B": "Use a cable lock",
+      "C": "Install a surge protector",
+      "D": "Use data mining"
+    },
+    "answer": "B"
+  },
+  {
+    "question": "Copying files from a computer's hard drive to store in a remote location is called:",
+    "options": {
+      "A": "Encryption",
+      "B": "Data backup",
+      "C": "Authentication",
+      "D": "Data mining"
+    },
+    "answer": "B"
+  },
+  {
+    "question": "Which of the following is a risk associated with using public wireless networks?",
+    "options": {
+      "A": "Reduced screen glare",
+      "B": "Reading wireless transmissions",
+      "C": "Hardware theft",
+      "D": "Repetitive strain injury"
+    },
+    "answer": "B"
+  },
+  {
+    "question": "What precaution should be taken when on a public wireless network?",
+    "options": {
+      "A": "Perform online banking",
+      "B": "Limit activity to simple web surfing",
+      "C": "Share personal information",
+      "D": "Turn off password manager"
+    },
+    "answer": "B"
+  },
+  {
+    "question": "Most security experts recommend that a secure password should be a minimum of:",
+    "options": {
+      "A": "6-8 characters",
+      "B": "10-12 characters",
+      "C": "15-20 characters",
+      "D": "25-30 characters"
+    },
+    "answer": "C"
+  },
+  {
+    "question": "When creating a secure password, it is generally recommended to:",
+    "options": {
+      "A": "Use dictionary words",
+      "B": "Use your pet's name",
+      "C": "Repeat sequences like 123",
+      "D": "Use a password manager"
+    },
+    "answer": "D"
+  },
+  {
+    "question": "Which of the following is an example of authenticating with biometrics?",
+    "options": {
+      "A": "Digital certificate",
+      "B": "Iris scanning",
+      "C": "Password manager",
+      "D": "Cable lock"
+    },
+    "answer": "B"
+  },
+  {
+    "question": "Two Factor Authentication (2FA) typically uses which two levels of security?",
+    "options": {
+      "A": "Two different passwords",
+      "B": "Passwords and codes",
+      "C": "Iris and fingerprint",
+      "D": "Two different emails"
+    },
+    "answer": "B"
+  },
+  {
+    "question": "The process of 'scrambling' information so it cannot be read without a 'key' is called:",
+    "options": {
+      "A": "Authentication",
+      "B": "Decryption",
+      "C": "Encryption",
+      "D": "Spoofing"
+    },
+    "answer": "C"
+  },
+  {
+    "question": "A technology used to verify a user's identity and key that is 'signed' by a trusted third party is a:",
+    "options": {
+      "A": "Password manager",
+      "B": "Digital certificate",
+      "C": "Surge protector",
+      "D": "Biometric identifier"
+    },
+    "answer": "B"
+  }
         ],
         'all': []
     };
-
-    // 合併所有題目
+    
+    // Fill all with all questions
     questionsByTopic.all = [...questionsByTopic.week12, ...questionsByTopic.week3, ...questionsByTopic.week4, ...questionsByTopic.week5, ...questionsByTopic.week6];
 
     let currentQuestions = [];
@@ -308,13 +683,13 @@
         return array;
     }
 
-    // 修正點：確保 startQuiz 在全域可用
-    window.startQuiz = function(topic) {
+    function startQuiz(topic) {
         currentTopic = topic;
         const pool = questionsByTopic[topic];
-        if (!pool || pool.length === 0) return;
-        
         currentQuestions = shuffle([...pool]).slice(0, 10);
+        while (currentQuestions.length < 10) {
+            currentQuestions = currentQuestions.concat(shuffle([...pool]).slice(0, 10 - currentQuestions.length));
+        }
         currentIndex = 0;
         score = 0;
         
@@ -322,34 +697,39 @@
         document.getElementById('quiz').style.display = 'block';
         document.getElementById('result').style.display = 'none';
         showQuestion();
-    };
+    }
 
     function showQuestion() {
         answered = false;
         const q = currentQuestions[currentIndex];
         document.getElementById('qNum').textContent = currentIndex + 1;
-        document.getElementById('progressBar').style.width = ((currentIndex) / 10 * 100) + '%';
+        document.getElementById('progressBar').style.width = ((currentIndex + 1) / 10 * 100) + '%';
         document.getElementById('question').textContent = q.question;
         
         const optionsEl = document.getElementById('options');
         optionsEl.innerHTML = '';
         
-        Object.keys(q.options).forEach(letter => {
+        const letters = Object.keys(q.options);
+        letters.forEach(letter => {
             const opt = document.createElement('div');
             opt.className = 'option';
             opt.dataset.letter = letter;
-            opt.innerHTML = `<div class="option-letter">${letter}</div><div class="option-text">${q.options[letter]}</div>`;
+            opt.innerHTML = '<div class="option-letter">' + letter + '</div><div class="option-text">' + q.options[letter] + '</div>';
             opt.onclick = () => selectAnswer(letter, opt);
             optionsEl.appendChild(opt);
         });
         
         document.getElementById('feedback').className = 'feedback';
+        document.getElementById('feedback').textContent = '';
         document.getElementById('nextBtn').className = 'btn';
+        document.getElementById('nextBtn').textContent = 'Next →'; 
+        document.getElementById('score').textContent = score;
     }
 
     function selectAnswer(letter, element) {
         if (answered) return;
         answered = true;
+        
         const q = currentQuestions[currentIndex];
         const correct = q.answer;
         
@@ -360,35 +740,45 @@
             score++;
         } else {
             element.classList.add('wrong');
-            document.querySelector(`[data-letter="${correct}"]`).classList.add('correct');
+            document.querySelector('[data-letter="' + correct + '"]')?.classList.add('correct');
             document.getElementById('feedback').className = 'feedback show wrong';
             document.getElementById('feedback').textContent = '✗ Wrong! Answer: ' + correct;
         }
+        
         document.getElementById('score').textContent = score;
+        
+        if (currentIndex >= 9) {
+            document.getElementById('nextBtn').textContent = 'See Results →';
+        }
         document.getElementById('nextBtn').className = 'btn show';
-        if (currentIndex >= 9) document.getElementById('nextBtn').textContent = 'See Results →';
     }
 
-    window.nextQuestion = function() {
+    function nextQuestion() {
         currentIndex++;
-        if (currentIndex >= 10) showResult(); else showQuestion();
-    };
+        if (currentIndex >= 10) {
+            showResult();
+        } else {
+            showQuestion();
+        }
+    }
 
     function showResult() {
         document.getElementById('quiz').style.display = 'none';
         document.getElementById('result').style.display = 'block';
         document.getElementById('finalScore').textContent = score;
         document.getElementById('topicName').textContent = topicNames[currentTopic];
+        
         const msg = document.getElementById('message');
         if (score >= 8) msg.textContent = 'Excellent! 🌟';
         else if (score >= 6) msg.textContent = 'Good job! 👍';
-        else msg.textContent = "Keep practicing! 💪";
+        else if (score >= 4) msg.textContent = 'Keep practicing! 💪';
+        else msg.textContent = "Don't give up! 🎯";
     }
 
-    window.goHome = function() {
+    function goHome() {
         document.getElementById('result').style.display = 'none';
         document.getElementById('home').style.display = 'block';
-    };
+    }
     </script>
 </body>
 </html>
